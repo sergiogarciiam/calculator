@@ -91,9 +91,15 @@ function evaluateSyntaxTree(syntaxTree) {
         result *= nodeResult;
         break;
       case "/":
+        if (nodeResult === 0) {
+          return "";
+        }
         result /= nodeResult;
         break;
       case "%":
+        if (nodeResult === 0) {
+          return "";
+        }
         result %= nodeResult;
         break;
     }
