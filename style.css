@@ -33,6 +33,14 @@ body {
   flex-direction: column;
   justify-content: end;
   align-items: end;
+  gap: 5px;
+
+  overflow: hidden;
+}
+
+.screenText {
+  font-size: 30px;
+  font-weight: bolder;
 }
 
 .keyboard {
