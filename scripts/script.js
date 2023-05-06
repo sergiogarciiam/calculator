@@ -68,7 +68,7 @@ function addOperation(button) {
 
       if (regex.test(actualContent)) {
         screenText.textContent = actualContent.slice(0, -1) + newContent;
-      } else {
+      } else if (testMaxSize()) {
         screenText.textContent += newContent;
       }
       break;
@@ -76,7 +76,7 @@ function addOperation(button) {
     case ".":
       if (actualContent.includes(".")) {
         screenText.textContent = actualContent;
-      } else {
+      } else if (testMaxSize()) {
         screenText.textContent += newContent;
       }
 
@@ -89,7 +89,7 @@ function addOperation(button) {
       break;
 
     default:
-      screenText.textContent += newContent;
+      if (testMaxSize()) screenText.textContent += newContent;
       break;
   }
   if (!operation) {
@@ -112,4 +112,23 @@ function addResultToScreen(result) {
   resultText.textContent = result;
   resultText.classList.add("screenText");
   screen.appendChild(resultText);
+}
+
+function testMaxSize() {
+  const screenText = document.querySelector(".screenText");
+
+  if (screenText == null || screenText.textContent.length != 15) {
+    return true;
+  } else {
+    warmUser();
+    return false;
+  }
+}
+
+function warmUser() {
+  const screenText = document.querySelector(".screenText");
+  screenText.style.color = "red";
+  setTimeout(() => {
+    screenText.style.color = "#eee";
+  }, 300);
 }
