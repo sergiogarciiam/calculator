@@ -15,7 +15,7 @@ function addKeyboardEvents(e) {
   if (key === "Enter") {
     key = "=";
   } else if (key === "Backspace") {
-    key = "Back";
+    key = "del";
   } else if (key === "Escape") {
     key = "AC";
   }
@@ -26,7 +26,7 @@ function addKeyboardEvents(e) {
 
       setTimeout(() => {
         button.classList.remove("button-active");
-      }, 200);
+      }, 300);
 
       addOperation(button);
       return;
@@ -55,7 +55,7 @@ function addOperation(button) {
       startingPoint = true;
       break;
 
-    case "Back":
+    case "del":
       screenText.textContent = actualContent.slice(0, -1);
       break;
 
