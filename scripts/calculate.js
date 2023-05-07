@@ -65,7 +65,7 @@ function parseExpression(tokens) {
 }
 
 function evaluateSyntaxTree(syntaxTree) {
-  let result = 0;
+  let result = 0.0;
   let operator = "+";
 
   for (let i = 0; i < syntaxTree.length; i++) {
@@ -92,13 +92,13 @@ function evaluateSyntaxTree(syntaxTree) {
         break;
       case "/":
         if (nodeResult === 0) {
-          return "";
+          return "Impossible";
         }
         result /= nodeResult;
         break;
       case "%":
         if (nodeResult === 0) {
-          return "";
+          return "Impossible";
         }
         result %= nodeResult;
         break;

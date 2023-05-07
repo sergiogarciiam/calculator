@@ -64,9 +64,9 @@ function addOperation(button) {
     case "*":
     case "-":
     case "+":
-      const regex = /[+\-*/%]$/; // regex to match any of +, -, *, / or % at the end of the string
+      const regexEnd = /[+\-*/%]$/; // regex to match any of +, -, *, / or % at the end of the string
 
-      if (regex.test(actualContent)) {
+      if (regexEnd.test(actualContent)) {
         screenText.textContent = actualContent.slice(0, -1) + newContent;
       } else if (testMaxSize()) {
         screenText.textContent += newContent;
@@ -74,7 +74,11 @@ function addOperation(button) {
       break;
 
     case ".":
-      if (actualContent.includes(".")) {
+      const regexOperators = /(\d+(\.\d+)?)(?!.*\d)/g;
+      const matches = screenText.textContent.match(regexOperators);
+      const lastNumber = matches[matches.length - 1];
+
+      if (lastNumber.includes(".") || screenText.textContent.endsWith(".")) {
         screenText.textContent = actualContent;
       } else if (testMaxSize()) {
         screenText.textContent += newContent;
