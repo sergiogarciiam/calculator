@@ -13,7 +13,7 @@ function tokenizeExpression(expression) {
     const char = expression[i];
     if (/\d/.test(char)) {
       currentToken += char;
-    } else if (/[\+\-\*\/\(\)]/.test(char)) {
+    } else if (/[\+\-\*\/%()\s]/.test(char)) {
       if (currentToken) {
         tokens.push(currentToken);
         currentToken = "";
@@ -36,7 +36,8 @@ function parseExpression(tokens) {
     const token = tokens[i];
     if (/\d/.test(token)) {
       syntaxTree.push(parseFloat(token));
-    } else if (/[\+\-\*\/]/.test(token)) {
+    } else if (/[\+\-\*\/%]/.test(token)) {
+      // added % here
       syntaxTree.push(token);
     } else if (/\(/.test(token)) {
       let subTree = [];
@@ -92,13 +93,15 @@ function evaluateSyntaxTree(syntaxTree) {
         break;
       case "/":
         if (nodeResult === 0) {
-          return "Impossible";
+          warmUser();
+          return 0;
         }
         result /= nodeResult;
         break;
       case "%":
         if (nodeResult === 0) {
-          return "Impossible";
+          warmUser();
+          return 0;
         }
         result %= nodeResult;
         break;

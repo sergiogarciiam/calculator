@@ -87,9 +87,11 @@ function addOperation(button) {
       break;
 
     case "=":
-      const result = evaluateExpression(actualContent);
-      addResultToScreen(result);
-      operation = true;
+      if (screenText.textContent != "") {
+        const result = evaluateExpression(actualContent);
+        addResultToScreen(result);
+        operation = true;
+      }
       break;
 
     default:
@@ -110,6 +112,7 @@ function cleanScreen() {
 function addResultToScreen(result) {
   const screenText = document.querySelector(".screenText");
   const resultText = document.createElement("p");
+  console.log(screenText);
 
   screenText.classList.remove("screenText");
 
