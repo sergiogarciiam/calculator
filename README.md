@@ -10,6 +10,7 @@ The project is from [The Odin Project](https://www.theodinproject.com/lessons/fo
 
 - Visual Studio Code
 - Linux Terminal
+- Font Awesome Icons
 - Git and GitHub
 - HTML and CSS
 - JavaScript

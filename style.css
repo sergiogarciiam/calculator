@@ -7,6 +7,9 @@
 body {
   background-color: #eee;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .calculator {
@@ -94,4 +97,12 @@ body {
 
 .button:hover {
   opacity: 0.5;
+}
+
+.github-link {
+  color: #333;
+  font-size: 40px;
+
+  align-self: flex-end;
+  margin: 1% 2%;
 }
