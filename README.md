@@ -1,16 +1,10 @@
-# calculator
+# Calculator
 
 A simple calculator created with html, css and js
 
 ## About the app
 
 The project is from [The Odin Project](https://www.theodinproject.com/lessons/foundations-calculator) curriculum.
-
-### Features
-
-- Operations:
-- It has a reset button
-- It's not support responsive design ([app screenshot](#screenshot))
 
 ### Tools and technology
 
@@ -21,6 +15,8 @@ The project is from [The Odin Project](https://www.theodinproject.com/lessons/fo
 - JavaScript
 
 ## Screenshot
+
+![calculator screenshot](./img/calculator.png)
 
 ## Author
 
