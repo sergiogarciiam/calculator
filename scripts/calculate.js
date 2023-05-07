@@ -37,7 +37,6 @@ function parseExpression(tokens) {
     if (/\d/.test(token)) {
       syntaxTree.push(parseFloat(token));
     } else if (/[\+\-\*\/%]/.test(token)) {
-      // added % here
       syntaxTree.push(token);
     } else if (/\(/.test(token)) {
       let subTree = [];
@@ -103,7 +102,7 @@ function evaluateSyntaxTree(syntaxTree) {
           warmUser();
           return 0;
         }
-        result %= nodeResult;
+        result *= nodeResult / 100;
         break;
     }
   }
