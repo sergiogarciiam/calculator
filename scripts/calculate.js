@@ -1,111 +1,98 @@
 function evaluateExpression(expression) {
-  const tokens = tokenizeExpression(expression);
-  const syntaxTree = parseExpression(tokens);
-  const result = evaluateSyntaxTree(syntaxTree);
-  return result;
+  const tokens = getTokens(expression);
+  const tree = getResult(tokens);
+  console.log(tree);
+  return tree;
 }
 
-function tokenizeExpression(expression) {
-  const tokens = [];
+function getTokens(expression) {
+  let tokens = [];
   let currentToken = "";
 
-  for (let i = 0; i < expression.length; i++) {
-    const char = expression[i];
-    if (/\d/.test(char)) {
-      currentToken += char;
-    } else if (/[\+\-\*\/%()\s]/.test(char)) {
-      if (currentToken) {
-        tokens.push(currentToken);
-        currentToken = "";
-      }
-      tokens.push(char);
+  for (let index = 0; index < expression.length; index++) {
+    if (isOperator(expression[index]) === "") {
+      currentToken += expression[index];
+    } else {
+      tokens.push(currentToken);
+      tokens.push(expression[index]);
+      currentToken = "";
     }
   }
 
-  if (currentToken) {
-    tokens.push(currentToken);
-  }
-
+  tokens.push(currentToken);
   return tokens;
 }
 
-function parseExpression(tokens) {
-  let syntaxTree = [];
+function getResult(tokens) {
+  if (tokens.length === 1) {
+    return tokens[0];
+  }
 
-  for (let i = 0; i < tokens.length; i++) {
-    const token = tokens[i];
-    if (/\d/.test(token)) {
-      syntaxTree.push(parseFloat(token));
-    } else if (/[\+\-\*\/%]/.test(token)) {
-      syntaxTree.push(token);
-    } else if (/\(/.test(token)) {
-      let subTree = [];
-      let count = 1;
-      i++;
+  for (let index = 0; index < tokens.length; index++) {
+    if (tokens[index] === "*" || tokens[index] === "/") {
+      let token = calculate(
+        tokens[index - 1],
+        tokens[index + 1],
+        tokens[index]
+      );
 
-      while (count > 0) {
-        const subToken = tokens[i];
-        if (/\(/.test(subToken)) {
-          count++;
-        } else if (/\)/.test(subToken)) {
-          count--;
-        }
-        if (count > 0) {
-          subTree.push(subToken);
-        }
-        i++;
+      if (token === "inf") {
+        return token;
       }
 
-      i--;
-      syntaxTree.push(parseExpression(subTree));
+      tokens.splice(index - 1, 3, token);
+
+      return getResult(tokens);
     }
   }
 
-  return syntaxTree;
+  for (let index = 0; index < tokens.length; index++) {
+    if (tokens[index] === "+" || tokens[index] === "-") {
+      let token = calculate(
+        tokens[index - 1],
+        tokens[index + 1],
+        tokens[index]
+      );
+
+      tokens.splice(index - 1, 3, token);
+
+      return getResult(tokens);
+    }
+  }
 }
 
-function evaluateSyntaxTree(syntaxTree) {
-  let result = 0.0;
-  let operator = "+";
-
-  for (let i = 0; i < syntaxTree.length; i++) {
-    const node = syntaxTree[i];
-
-    if (Array.isArray(node)) {
-      nodeResult = evaluateSyntaxTree(node);
-    } else if (typeof node === "number") {
-      nodeResult = node;
-    } else {
-      operator = node;
-      continue;
-    }
-
-    switch (operator) {
-      case "+":
-        result += nodeResult;
-        break;
-      case "-":
-        result -= nodeResult;
-        break;
-      case "*":
-        result *= nodeResult;
-        break;
-      case "/":
-        if (nodeResult === 0) {
-          warmUser();
-          return 0;
-        }
-        result /= nodeResult;
-        break;
-      case "%":
-        if (nodeResult === 0) {
-          warmUser();
-          return 0;
-        }
-        result *= nodeResult / 100;
-        break;
-    }
+function calculate(operand1, operand2, operator) {
+  switch (operator) {
+    case "*":
+      return operand1 * operand2;
+    case "/":
+      if (operand2 === "0") {
+        return "inf";
+      } else {
+        return operand1 / operand2;
+      }
+    case "+":
+      return +operand1 + +operand2;
+    case "-":
+      return operand1 - operand2;
+    default:
+      return "";
   }
+}
 
-  return result;
+function isOperator(char) {
+  switch (char) {
+    case "*":
+      return "*";
+    case "/":
+      return "*";
+    case "+":
+      return "*";
+    case "-":
+      return "*";
+    case "%":
+      return "*";
+    default:
+      return "";
+  }
 }

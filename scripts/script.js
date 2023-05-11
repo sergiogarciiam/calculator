@@ -55,11 +55,14 @@ function addOperation(button) {
       startingPoint = true;
       break;
 
+    case "c":
+      screenText.textContent = "";
+      break;
+
     case "del":
       screenText.textContent = actualContent.slice(0, -1);
       break;
 
-    case "%":
     case "/":
     case "*":
     case "-":
@@ -114,9 +117,17 @@ function addResultToScreen(result) {
   const resultText = document.createElement("p");
   console.log(screenText);
 
+  if (result == "inf") {
+    warmUser();
+  }
+
   screenText.classList.remove("screenText");
 
-  resultText.textContent = result;
+  if (result != "inf") {
+    resultText.textContent = result;
+  } else {
+    resultText.textContent = "";
+  }
   resultText.classList.add("screenText");
   screen.appendChild(resultText);
 }
