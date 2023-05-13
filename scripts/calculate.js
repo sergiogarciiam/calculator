@@ -1,8 +1,8 @@
 function evaluateExpression(expression) {
   const tokens = getTokens(expression);
-  const tree = getResult(tokens);
-  console.log(tree);
-  return tree;
+  let result = getResult(tokens);
+  result = controlDecimals(result);
+  return result;
 }
 
 function getTokens(expression) {
@@ -10,7 +10,7 @@ function getTokens(expression) {
   let currentToken = "";
 
   for (let index = 0; index < expression.length; index++) {
-    if (isOperator(expression[index]) === "") {
+    if (!isOperator(expression[index])) {
       currentToken += expression[index];
     } else {
       tokens.push(currentToken);
@@ -61,6 +61,18 @@ function getResult(tokens) {
   }
 }
 
+function controlDecimals(result) {
+  result = result.toString();
+  if (result.includes(".")) {
+    const numbers = result.split(".");
+    if (numbers[1].length > 2) {
+      result = parseFloat(result).toFixed(2);
+    }
+  }
+
+  return result;
+}
+
 function calculate(operand1, operand2, operator) {
   switch (operator) {
     case "*":
@@ -81,18 +93,5 @@ function calculate(operand1, operand2, operator) {
 }
 
 function isOperator(char) {
-  switch (char) {
-    case "*":
-      return "*";
-    case "/":
-      return "*";
-    case "+":
-      return "*";
-    case "-":
-      return "*";
-    case "%":
-      return "*";
-    default:
-      return "";
-  }
+  return char === "*" || char === "/" || char === "+" || char === "-";
 }

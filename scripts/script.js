@@ -1,13 +1,20 @@
+// GLOBAL VARIABLES
 const screen = document.querySelector(".screen");
 const buttons = document.querySelectorAll(".button");
 let startingPoint = true;
 
-document.addEventListener("keydown", addKeyboardEvents);
-buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    addOperation(button);
+// SET UP
+setUp();
+
+// FUNCTIONS
+function setUp() {
+  document.addEventListener("keydown", addKeyboardEvents);
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      addOperation(button);
+    });
   });
-});
+}
 
 function addKeyboardEvents(e) {
   var key = e.key;
@@ -69,7 +76,9 @@ function addOperation(button) {
     case "+":
       const regexEnd = /[+\-*/%]$/; // regex to match any of +, -, *, / or % at the end of the string
 
-      if (regexEnd.test(actualContent)) {
+      if (newContent != "-" && actualContent === "") {
+        screenText.textContent = actualContent;
+      } else if (regexEnd.test(actualContent)) {
         screenText.textContent = actualContent.slice(0, -1) + newContent;
       } else if (testMaxSize()) {
         screenText.textContent += newContent;
