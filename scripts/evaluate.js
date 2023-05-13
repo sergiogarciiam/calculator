@@ -28,8 +28,17 @@ function getResult(tokens) {
     return tokens[0];
   }
 
+  let result = operate(tokens, "*", "/");
+  if (result === "") {
+    result = operate(tokens, "+", "-");
+  }
+
+  return result;
+}
+
+function operate(tokens, operator1, operator2) {
   for (let index = 0; index < tokens.length; index++) {
-    if (tokens[index] === "*" || tokens[index] === "/") {
+    if (tokens[index] === operator1 || tokens[index] === operator2) {
       let token = calculate(
         tokens[index - 1],
         tokens[index + 1],
@@ -45,32 +54,7 @@ function getResult(tokens) {
       return getResult(tokens);
     }
   }
-
-  for (let index = 0; index < tokens.length; index++) {
-    if (tokens[index] === "+" || tokens[index] === "-") {
-      let token = calculate(
-        tokens[index - 1],
-        tokens[index + 1],
-        tokens[index]
-      );
-
-      tokens.splice(index - 1, 3, token);
-
-      return getResult(tokens);
-    }
-  }
-}
-
-function controlDecimals(result) {
-  result = result.toString();
-  if (result.includes(".")) {
-    const numbers = result.split(".");
-    if (numbers[1].length > 2) {
-      result = parseFloat(result).toFixed(2);
-    }
-  }
-
-  return result;
+  return "";
 }
 
 function calculate(operand1, operand2, operator) {
@@ -90,6 +74,18 @@ function calculate(operand1, operand2, operator) {
     default:
       return "";
   }
+}
+
+function controlDecimals(result) {
+  result = result.toString();
+  if (result.includes(".")) {
+    const numbers = result.split(".");
+    if (numbers[1].length > 2) {
+      result = parseFloat(result).toFixed(2);
+    }
+  }
+
+  return result;
 }
 
 function isOperator(char) {
