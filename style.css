@@ -15,7 +15,7 @@ body {
 .calculator {
   width: 500px;
   height: 700px;
-  margin: 5% auto;
+  margin: 20px auto 0 auto;
   padding: 20px;
 
   display: flex;
@@ -103,6 +103,11 @@ body {
   color: #333;
   font-size: 40px;
 
-  align-self: flex-end;
-  margin: 1% 2%;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+.github-link:hover {
+  color: #295052;
 }
